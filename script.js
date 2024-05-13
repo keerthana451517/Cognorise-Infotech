@@ -1,31 +1,24 @@
-// Set the target date and time for the countdown
-const targetDate = new Date("June 25, 2024 15:00:00").getTime();
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
 
-// Update the countdown every second
-const countdownInterval = setInterval(() => {
-  // Get the current date and time
-  const now = new Date().getTime();
+    if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+        document.getElementById('result').innerText = 'Please enter valid weight and height values.';
+        return;
+    }
 
-  // Calculate the time difference between the current date/time and the target date/time
-  const timeDifference = targetDate - now;
+    const bmi = weight / (height * height);
+    let category;
 
-  // Calculate days, hours, minutes, and seconds
-  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    if (bmi < 18.5) {
+        category = 'Underweight';
+    } else if (bmi >= 18.5 && bmi < 25) {
+        category = 'Normal weight';
+    } else if (bmi >= 25 && bmi < 30) {
+        category = 'Overweight';
+    } else {
+        category = 'Obesity';
+    }
+    document.getElementById('result').innerText= your BMI: ${ bmi.toFixed(2)}  (${category});
 
-  // Display the calculated time in the HTML elements
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
-
-  // Check if the countdown has expired
-  if (timeDifference < 0) {
-    clearInterval(countdownInterval);
-    document.getElementById("timer").innerHTML = "Countdown expired";
-  }
-}, 1000);
+}
